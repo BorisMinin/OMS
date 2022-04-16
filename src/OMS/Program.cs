@@ -1,8 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using OMS.Data.Access.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+string connString = builder.Configuration.GetConnectionString("SQLServer");
+builder.Services.AddDbContext<OMSDbContext>(options => options.UseSqlServer(connString));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
