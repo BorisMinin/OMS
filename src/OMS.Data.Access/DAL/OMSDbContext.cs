@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OMS.Data.Access.Helpers;
+using OMS.Data.Model.Entities;
 
 namespace OMS.Data.Access.DAL
 {
@@ -7,8 +8,13 @@ namespace OMS.Data.Access.DAL
     {
         public OMSDbContext(DbContextOptions<OMSDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.EnsureCreated(); 
         }
+        // Представление набора сущностей
+        DbSet<Category> Categories { get; set; }
+        DbSet<Product> Products { get; set; }
+        DbSet<Order> Orders { get; set; }
+        DbSet<OrderDetail> OrderDetails { get; set; }   
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
