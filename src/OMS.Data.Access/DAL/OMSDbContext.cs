@@ -7,6 +7,7 @@ namespace OMS.Data.Access.DAL
     {
         public OMSDbContext(DbContextOptions<OMSDbContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
