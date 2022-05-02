@@ -8,7 +8,7 @@
 
         public int? CategoryId { get; set; }
 
-        public string QuantityPerUnit { get; set; }
+        public string? QuantityPerUnit { get; set; }
 
         public decimal? UnitPrice { get; set; }
 
@@ -18,10 +18,10 @@
 
         public short? ReorderLevel { get; set; }
 
-        public bool? Discontinued { get; set; }
+        public bool Discontinued { get; set; }
 
         public Category Category { get; set; } 
 
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        public ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }
