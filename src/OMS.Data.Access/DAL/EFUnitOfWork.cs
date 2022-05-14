@@ -26,7 +26,8 @@ namespace OMS.Data.Access.DAL
         /// <param name="obj"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IQueryable<T> Query<T>(T obj) where T : class => _context.Set<T>();
+        public IQueryable<T> Query<T>(T obj, CancellationToken token) where T : class => _context.Set<T>();
+        // todo: сформулирвать комментарии
         /// <summary>
         /// 
         /// </summary>
@@ -39,6 +40,7 @@ namespace OMS.Data.Access.DAL
             await this._context.Set<T>().AddAsync(obj, token);
             await this._context.SaveChangesAsync(); 
         }
+        // todo: сформулирвать комментарии
         /// <summary>
         /// 
         /// </summary>
@@ -52,6 +54,7 @@ namespace OMS.Data.Access.DAL
             .Update(obj);
         }
         // todo: реализовать Soft Delete
+        // todo: сформулирвать комментарии
         /// <summary>
         /// 
         /// </summary>

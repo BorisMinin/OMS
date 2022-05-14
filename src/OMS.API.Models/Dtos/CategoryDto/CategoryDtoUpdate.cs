@@ -1,7 +1,10 @@
-﻿namespace OMS.Data.Model.Entities
-{
-    //todo: добавить комментарий к сущности, описав её семантику
-    public class Category
+﻿namespace OMS.API.Models.Dtos.CategoryDto
+{  
+    /// <summary>
+     /// Хранит в себе набор свойств, которые будут использоваться
+     /// для обновления сущности Category
+     /// </summary>
+    public class CategoryDtoUpdate
     {
         // Идентификатор категории
         public int CategoryId { get; set; }
@@ -9,7 +12,5 @@
         public string CategoryName { get; set; }
         // Описание категории
         public string Description { get; set; }
-
-        public ICollection<Product> Products { get; set; }
     }
 }
