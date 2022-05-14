@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace OMS.Data.Access.DAL
+﻿namespace OMS.Data.Access.DAL
 {
     public interface IUnitOfWork : IDisposable
     {
