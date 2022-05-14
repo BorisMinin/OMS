@@ -12,4 +12,8 @@
     <ProjectReference Include="..\OMS.Data.Model\OMS.Data.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DI\" />
+  </ItemGroup>
+
 </Project>
