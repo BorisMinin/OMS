@@ -12,12 +12,13 @@ builder.Services.AddDbContext<OMSDbContext>(options => options.UseSqlServer(conn
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+ContainerSetup.Setup(builder.Services);
 
 var app = builder.Build();
 IConfiguration configuration = app.Configuration;
 
 // Add services to the container.
-ContainerSetup.Setup(builder.Services);
+//ContainerSetup.Setup(builder.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

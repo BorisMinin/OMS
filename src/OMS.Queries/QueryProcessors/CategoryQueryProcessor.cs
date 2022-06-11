@@ -22,8 +22,9 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task<Category> GetById(int id, CancellationToken token)
         {
-            return await this._unitOfWork.Query<Category>()
+            var res =  await this._unitOfWork.Query<Category>()
                 .FirstOrDefaultAsync(x => x.CategoryId == id, token);
+            return res;
         }
 
         public async Task<Category> Create(CategoryDtoCreate dto, CancellationToken token)

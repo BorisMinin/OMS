@@ -74,7 +74,7 @@ namespace OMS.Data.Access.DAL
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context = null;
         }
     }
 }
