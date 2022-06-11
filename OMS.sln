@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Data.Access", "src\OMS.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.API.Models", "src\OMS.API.Models\OMS.API.Models.csproj", "{46C534E5-004D-48A6-811E-5A7A30B14318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.Queries", "src\OMS.Queries\OMS.Queries.csproj", "{73A1AC99-C6A8-4AD1-9542-E8F8E9D11119}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Queries", "src\OMS.Queries\OMS.Queries.csproj", "{73A1AC99-C6A8-4AD1-9542-E8F8E9D11119}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

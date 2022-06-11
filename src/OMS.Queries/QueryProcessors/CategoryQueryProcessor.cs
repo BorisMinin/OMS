@@ -1,4 +1,5 @@
-﻿using OMS.API.Models.Dtos.CategoryDto;
+﻿using Microsoft.EntityFrameworkCore;
+using OMS.API.Models.Dtos.CategoryDto;
 using OMS.Data.Access.DAL;
 using OMS.Data.Model.Entities;
 using OMS.Queries.Interfaces;
@@ -13,32 +14,52 @@ namespace OMS.Queries.QueryProcessors
         {
             _unitOfWork = unitOfWork;
         }
+
         public IQueryable<Category> Get(CancellationToken token)
         {
-            throw new NotImplementedException();
+            return (IQueryable<Category>)this._unitOfWork.Query<Category>().ToListAsync();
         }
 
         public async Task<Category> GetById(int id, CancellationToken token)
         {
-            //throw new NotImplementedException();
-            var r = await this._unitOfWork.Query<Category>()
-                .FirstOrDefault(x => x.CategoryId == id, token);
-            return r;
+            return await this._unitOfWork.Query<Category>()
+                .FirstOrDefaultAsync(x => x.CategoryId == id, token);
         }
 
-        public Task<Category> Create(CategoryDtoCreate dto, CancellationToken token)
+        public async Task<Category> Create(CategoryDtoCreate dto, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var category = new Category()
+            {
+                CategoryName = dto.CategoryName,
+                Description = dto.Description
+            };
+
+            await this._unitOfWork.Add(category, token);
+            await this._unitOfWork.CommitAsync(token);
+
+            return category;
         }
 
-        public Task<Category> Update(int id, CategoryDtoUpdate dto, CancellationToken token)
+        public async Task<Category> Update(int id, CategoryDtoUpdate dto, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var category = await _unitOfWork.Query<Category>().FirstOrDefaultAsync(c => c.CategoryId == id);
+
+            category.Description = dto.Description;
+
+            await _unitOfWork.CommitAsync(token);
+
+            return category;
         }
 
-        public Task Delete(int id, CancellationToken token)
+        public async Task Delete(int id, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var category = await _unitOfWork.Query<Category>().FirstOrDefaultAsync(c => c.CategoryId == id);
+
+            if (category == null)
+                throw new KeyNotFoundException();
+
+            _unitOfWork.Delete(category, token);
+            await _unitOfWork.CommitAsync(token);
         }
     }
 }

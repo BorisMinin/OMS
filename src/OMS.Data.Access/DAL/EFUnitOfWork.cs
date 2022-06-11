@@ -26,7 +26,8 @@ namespace OMS.Data.Access.DAL
         /// <param name="obj"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IQueryable<T> Query<T>(T obj, CancellationToken token) where T : class => _context.Set<T>();
+        public IQueryable<T> Query<T>(/*T obj, CancellationToken token*/)
+            where T : class => _context.Set<T>();
         // todo: сформулирвать комментарии
         /// <summary>
         /// 
@@ -34,7 +35,7 @@ namespace OMS.Data.Access.DAL
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <param name="token"></param>
-        public async void Add<T>(T obj, CancellationToken token)
+        public async Task Add<T>(T obj, CancellationToken token)
             where T : class
         {
             await this._context.Set<T>().AddAsync(obj, token);
@@ -65,6 +66,10 @@ namespace OMS.Data.Access.DAL
             where T : class
         {
             this._context.Set<T>().Remove(obj);
+        }
+        public async Task CommitAsync(CancellationToken token)
+        {
+            await _context.SaveChangesAsync(token);
         }
 
         public void Dispose()

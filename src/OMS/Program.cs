@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using OMS.Data.Access.DAL;
+using OMS.DI;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 
@@ -15,6 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+IConfiguration configuration = app.Configuration;
+
+// Add services to the container.
+ContainerSetup.Setup(builder.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
