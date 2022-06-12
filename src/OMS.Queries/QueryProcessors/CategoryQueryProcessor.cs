@@ -22,9 +22,8 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task<Category> GetById(int id, CancellationToken token)
         {
-            var res =  await this._unitOfWork.Query<Category>()
+            return await this._unitOfWork.Query<Category>()
                 .FirstOrDefaultAsync(x => x.CategoryId == id, token);
-            return res;
         }
 
         public async Task<Category> Create(CategoryDtoCreate dto, CancellationToken token)
@@ -43,7 +42,7 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task<Category> Update(int id, CategoryDtoUpdate dto, CancellationToken token)
         {
-            var category = await _unitOfWork.Query<Category>().FirstOrDefaultAsync(c => c.CategoryId == id);
+            var category = await _unitOfWork.Query<Category>().FirstOrDefaultAsync(c => c.CategoryId == id, token);
 
             category.Description = dto.Description;
 
@@ -55,9 +54,6 @@ namespace OMS.Queries.QueryProcessors
         public async Task Delete(int id, CancellationToken token)
         {
             var category = await _unitOfWork.Query<Category>().FirstOrDefaultAsync(c => c.CategoryId == id);
-
-            if (category == null)
-                throw new KeyNotFoundException();
 
             _unitOfWork.Delete(category, token);
             await _unitOfWork.CommitAsync(token);

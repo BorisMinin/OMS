@@ -37,7 +37,7 @@ namespace OMS.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<CategoryDtoGet> PostCategory([FromBody] CategoryDtoCreate dtoCategory, CancellationToken token)
+        public async Task<CategoryDtoGet> AddCategory([FromBody] CategoryDtoCreate dtoCategory, CancellationToken token)
         {
             var result = await this._queryProcessor.Create(dtoCategory, token);
             return this._autoMapper.Map<CategoryDtoGet>(result);
