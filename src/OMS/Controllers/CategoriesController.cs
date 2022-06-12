@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OMS.API.Models.Dtos.CategoryDto;
-using OMS.Data.Model.Entities;
 using OMS.Maps;
 using OMS.Queries.Interfaces;
 
@@ -12,25 +11,62 @@ namespace OMS.Controllers
     {
         private readonly ICategoryQueryProcessor _queryProcessor;
         private readonly IAutoMapper _autoMapper;
-        readonly NorthwindContext _northwindContext;
+
         public CategoriesController(ICategoryQueryProcessor queryProcessor, IAutoMapper autoMapper)
         {
             _queryProcessor = queryProcessor;
             _autoMapper = autoMapper;
         }
 
+        /// <summary>
+        /// возвращает запись Category по идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор категории</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<CategoryDtoGet> GetCategory(int id, CancellationToken token)
         {
-            var item = await _queryProcessor.GetById(id, token);
-            var model = _autoMapper.Map<CategoryDtoGet>(item);
-            return model;
+            var result = await this._queryProcessor.GetById(id, token);
+            return this._autoMapper.Map<CategoryDtoGet>(result);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategory()
+        /// <summary>
+        /// todo: написать комментарий
+        /// </summary>
+        /// <param name="dtoCategory"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<CategoryDtoGet> PostCategory([FromBody] CategoryDtoCreate dtoCategory, CancellationToken token)
         {
-            return await _northwindContext.Categories.ToListAsync();
+            var result = await this._queryProcessor.Create(dtoCategory, token);
+            return this._autoMapper.Map<CategoryDtoGet>(result);
+        }
+
+        /// <summary>
+        /// todo: написать комментарий
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dtoCategory"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<CategoryDtoGet> UpdateCategory(int id, [FromBody] CategoryDtoUpdate dtoCategory, CancellationToken token)
+        {
+            var result = await this._queryProcessor.Update(id, dtoCategory, token);
+            return this._autoMapper.Map<CategoryDtoGet>(result);
+        }
+
+        /// <summary>
+        /// удаляет запись Category по идентификатору
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task DeleteCategory(int id, CancellationToken token)
+        {
+            await this._queryProcessor.Delete(id, token);
         }
     }
 }
