@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.API.Models.Dtos.ProductDto
+﻿namespace OMS.API.Models.Dtos.ProductDto
 {
     /// <summary>
-    /// todo: написать комментарий
+    /// Хранит в себе набор свойств, которые будут использоваться
+    /// для создания новой сущности Product
     /// </summary>
     public class ProductDtoUpdate
     {
