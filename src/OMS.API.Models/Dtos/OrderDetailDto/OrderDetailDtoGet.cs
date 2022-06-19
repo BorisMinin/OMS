@@ -1,9 +1,8 @@
-﻿namespace OMS.API.Models.OrderDetailDto
+﻿using OMS.Data.Model.Entities;
+
+namespace OMS.API.Models.OrderDetailDto
 {
-    /// <summary>
-    ///  todo: написать комментарий
-    /// </summary>
-    public class OrderDetailDtoCreate
+    public class OrderDetailDtoGet
     {
         // todo: написать комментарий
         public int OrderId { get; set; }
@@ -15,7 +14,9 @@
         public short Quantity { get; set; }
         // todo: написать комментарий
         public float Discount { get; set; }
-
-        public virtual ICollection<OrderDetailDtoCreate> OrderDetailCreate { get; set; }
+        // todo: написать комментарий
+        public Order Order { get; set; }
+        // todo: написать комментарий
+        public Product Product { get; set; }
     }
 }

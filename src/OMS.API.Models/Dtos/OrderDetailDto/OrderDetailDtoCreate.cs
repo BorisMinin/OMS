@@ -1,15 +1,12 @@
 ﻿using OMS.Data.Model.Entities;
 
-namespace OMS.API.Models.Dtos.OrderDto
+namespace OMS.API.Models.OrderDetailDto
 {
     /// <summary>
-    /// Хранит в себе набор свойств, которые будут использоваться
-    /// для получения записей сущности Order и/или OrderDetails
+    ///  todo: написать комментарий
     /// </summary>
-    public class OrderDtoGet
+    public class OrderDetailDtoCreate
     {
-        // todo: написать комментарий
-        public int OrderId { get; set; }
         // todo: написать комментарий
         public DateTime? OrderDate { get; set; }
         // todo: написать комментарий
@@ -21,18 +18,20 @@ namespace OMS.API.Models.Dtos.OrderDto
         // todo: написать комментарий
         public decimal? Freight { get; set; }
         // todo: написать комментарий
-        public string? ShipName { get; set; }
+        public string ShipName { get; set; }
         // todo: написать комментарий
-        public string? ShipAddress { get; set; }
+        public string ShipAddress { get; set; }
         // todo: написать комментарий
-        public string? ShipCity { get; set; }
+        public string ShipCity { get; set; }
         // todo: написать комментарий
-        public string? ShipRegion { get; set; }
+        public string ShipRegion { get; set; }
         // todo: написать комментарий
-        public string? ShipPostalCode { get; set; }
+        public string ShipPostalCode { get; set; }
         // todo: написать комментарий
-        public string? ShipCountry { get; set; }
-
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public string ShipCountry { get; set; }
+        // todo: написать комментарий
+        public Order Order { get; set; }
+        // todo: написать комментарий
+        public Product Product { get; set; }
     }
 }

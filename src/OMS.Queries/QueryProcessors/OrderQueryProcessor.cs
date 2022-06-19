@@ -17,14 +17,14 @@ namespace OMS.Queries.QueryProcessors
         public IQueryable<Order> Get(CancellationToken token)
         {
             return (IQueryable<Order>)this._unitOfWork.Query<Order>()
-                .Include(x => x.OrderDetails)
+                .Include(x => x.OrderDetail)
                 .ToListAsync(token);
         }
 
         public async Task<Order> GetById(int id, CancellationToken token)
         {
             return await this._unitOfWork.Query<Order>()
-                .Include(x => x.OrderDetails)
+                .Include(x => x.OrderDetail)
                 .FirstOrDefaultAsync(x => x.OrderId == id, token);
         }
 
@@ -46,13 +46,13 @@ namespace OMS.Queries.QueryProcessors
             };
 
             //var orderDetail = new OrderDetailCreate()
-                //{
-                //    OrderId = x.OrderId,
-                //    ProductId = x.ProductId,
-                //    UnitPrice = x.UnitPrice,
-                //    Quantity = x.Quantity,
-                //    Discount = x.Discount
-                //});
+            //{
+            //    OrderId = x.OrderId,
+            //    ProductId = x.ProductId,
+            //    UnitPrice = x.UnitP rice,
+            //    Quantity = x.Quantity,
+            //    Discount = x.Discount
+            //});
 
 
             await this._unitOfWork.Add(order, token);
