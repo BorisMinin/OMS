@@ -26,6 +26,6 @@
       
         public string? ShipCountry { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

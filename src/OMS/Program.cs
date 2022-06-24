@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OMS.Data.Access.DAL;
 using OMS.DI;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ builder.Services.AddControllers();
 
 string connString = builder.Configuration.GetConnectionString("SQLServer");
 builder.Services.AddDbContext<OMSDbContext>(options => options.UseSqlServer(connString));
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -20,8 +20,8 @@
 
         public bool Discontinued { get; set; }
 
-        public virtual Category Category { get; set; } 
+        public Category Category { get; set; } 
 
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

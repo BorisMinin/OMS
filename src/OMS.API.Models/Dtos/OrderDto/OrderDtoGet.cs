@@ -33,6 +33,6 @@ namespace OMS.API.Models.Dtos.OrderDto
         // todo: написать комментарий
         public string? ShipCountry { get; set; }
 
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
