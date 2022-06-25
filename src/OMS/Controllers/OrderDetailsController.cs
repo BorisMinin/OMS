@@ -32,6 +32,23 @@ namespace OMS.Controllers
             return this._autoMapper.Map<OrderDtoGet>(result);
         }
 
+
+        /// <summary>
+        /// запись в Order и в OrderDetails
+        /// </summary>
+        /// <param name="dtoOrder"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<OrderDtoCreate> CreateOrderDetail(OrderDtoCreate dtoOrder, CancellationToken token)
+        {
+            var result1 = "jopa";
+
+            var result = await this._queryProcessor.Create(dtoOrder,token);
+                
+            return this._autoMapper.Map<OrderDtoCreate>(result);
+        }
+
         /// <summary>
         /// удаляет запись OrderDetails по идентификатору
         /// </summary>

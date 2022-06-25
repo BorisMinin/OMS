@@ -45,16 +45,17 @@ namespace OMS.Queries.QueryProcessors
                 ShipCountry = orderDto.ShipCountry
             };
 
-            //var orderDetail = new OrderDetailCreate()
-            //{
-            //    OrderId = x.OrderId,
-            //    ProductId = x.ProductId,
-            //    UnitPrice = x.UnitPrice,
-            //    Quantity = x.Quantity,
-            //    Discount = x.Discount
-            //});
 
+            var orderDetails = orderDto.Order_Details.Select(s => new OrderDetail()
+            {
+                OrderId = s.OrderId,
+                ProductId = s.ProductId,
+                UnitPrice = s.UnitPrice,
+                Quantity = s.Quantity,
+                Discount = s.Discount
+            });
 
+            order.OrderDetails = orderDetails.ToList<OrderDetail>();
             await this._unitOfWork.Add(order, token);
             await this._unitOfWork.CommitAsync(token);
 
@@ -66,11 +67,14 @@ namespace OMS.Queries.QueryProcessors
             throw new NotImplementedException();
         }
 
-        public async Task Delete(int id, CancellationToken token)
+        public async Task Delete(int orderId, int productId, CancellationToken token)
         {
-            var order = await _unitOfWork.Query<Order>()
-                .FirstOrDefaultAsync(c => c.OrderId == id)
-                ;
+            var order = await _unitOfWork.Query<OrderDetail>()
+                .FirstOrDefaultAsync(c => c.OrderId == orderId);
+            var product = await _unitOfWork.Query<OrderDetail>()
+                .FirstOrDefaultAsync(c => c.ProductId == productId);
+
+
 
             _unitOfWork.Delete(order, token);
             await _unitOfWork.CommitAsync(token);
