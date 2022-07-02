@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OMS.API.Models.Dtos.OrderDto;
-using OMS.API.Models.OrderDetailDto;
-using OMS.Data.Model.Entities;
 using OMS.Maps;
 using OMS.Queries.Interfaces;
 
@@ -32,7 +30,6 @@ namespace OMS.Controllers
             return this._autoMapper.Map<OrderDtoGet>(result);
         }
 
-
         /// <summary>
         /// запись в Order и в OrderDetails
         /// </summary>
@@ -42,23 +39,22 @@ namespace OMS.Controllers
         [HttpPost]
         public async Task<OrderDtoCreate> CreateOrderDetail(OrderDtoCreate dtoOrder, CancellationToken token)
         {
-            var result1 = "jopa";
-
             var result = await this._queryProcessor.Create(dtoOrder,token);
                 
             return this._autoMapper.Map<OrderDtoCreate>(result);
         }
 
         /// <summary>
-        /// удаляет запись OrderDetails по идентификатору
+        /// Удаляет запись из таблицы OrderDetails, по id внешнего ключа каждой сущности
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="orderId">first entity id</param>
+        /// <param name="productId">second entity id</param>
         /// <param name="token"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task DeleteOrderDetail(int id, CancellationToken token)
+        [HttpDelete("{orderId}/{productId}")]
+        public async Task DeleteOrderDetail(int orderId, int productId, CancellationToken token)
         {
-            await this._queryProcessor.Delete(id, token);
+            await this._queryProcessor.Delete(orderId, productId, token);
         }
     }
 }

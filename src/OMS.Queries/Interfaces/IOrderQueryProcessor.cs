@@ -13,6 +13,6 @@ namespace OMS.Queries.Interfaces
 
         Task<Order> Update(int id, OrderDtoUpdate dto, CancellationToken token);
 
-        Task Delete(int id, CancellationToken token);
+        Task Delete(int orderId, int productId, CancellationToken token);
     }
 }

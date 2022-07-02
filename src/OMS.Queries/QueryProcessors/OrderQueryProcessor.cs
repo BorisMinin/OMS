@@ -69,14 +69,13 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task Delete(int orderId, int productId, CancellationToken token)
         {
-            var order = await _unitOfWork.Query<OrderDetail>()
-                .FirstOrDefaultAsync(c => c.OrderId == orderId);
-            var product = await _unitOfWork.Query<OrderDetail>()
-                .FirstOrDefaultAsync(c => c.ProductId == productId);
+            var details = await _unitOfWork.Query<OrderDetail>()
+                .FirstOrDefaultAsync
+                (
+                    c => c.OrderId == orderId && c.ProductId == productId
+                );
 
-
-
-            _unitOfWork.Delete(order, token);
+            this._unitOfWork.Delete(details, token);
             await _unitOfWork.CommitAsync(token);
         }
     }
