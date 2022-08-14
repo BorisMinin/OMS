@@ -15,15 +15,19 @@ namespace OMS.Queries.QueryProcessors
             _unitOfWork = unitOfWork;
         }
 
-        public IQueryable<Category> Get(CancellationToken token)
+        public IQueryable<Category> Get()
         {
-            return (IQueryable<Category>)this._unitOfWork.Query<Category>().ToListAsync();
+            return GetQuery();
         }
 
-        public async Task<Category> GetById(int id, CancellationToken token)
+        private IQueryable<Category> GetQuery()
         {
-            return await this._unitOfWork.Query<Category>()
-                .FirstOrDefaultAsync(x => x.CategoryId == id, token);
+            return _unitOfWork.Query<Category>();
+        }
+
+        public Category Get(int id)
+        {
+            return GetQuery().AsNoTracking().FirstOrDefault(x => x.CategoryId == id);
         }
 
         public async Task<Category> Create(CategoryDtoCreate dto, CancellationToken token)
@@ -42,8 +46,9 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task<Category> Update(int id, CategoryDtoUpdate dto, CancellationToken token)
         {
-            var category = await _unitOfWork.Query<Category>().FirstOrDefaultAsync(c => c.CategoryId == id, token);
+            var category = GetQuery().FirstOrDefault(x => x.CategoryId == id);
 
+            category.CategoryName = dto.CategoryName;
             category.Description = dto.Description;
 
             await _unitOfWork.CommitAsync(token);
@@ -53,7 +58,7 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task Delete(int id, CancellationToken token)
         {
-            var category = await _unitOfWork.Query<Category>().FirstOrDefaultAsync(c => c.CategoryId == id);
+            var category = GetQuery().AsNoTracking().FirstOrDefault(x => x.CategoryId == id);
 
             _unitOfWork.Delete(category, token);
             await _unitOfWork.CommitAsync(token);

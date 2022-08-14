@@ -23,4 +23,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OMS.Data.Model\OMS.Data.Model.csproj" />
+    <ProjectReference Include="..\..\src\OMS.Queries\OMS.Queries.csproj" />
+  </ItemGroup>
+
 </Project>

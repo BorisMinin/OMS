@@ -24,9 +24,9 @@ namespace OMS.Controllers
         /// <param name="id">идентификатор категории</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<CategoryDtoGet> GetCategory(int id, CancellationToken token)
+        public CategoryDtoGet GetCategory(int id)
         {
-            var result = await this._queryProcessor.GetById(id, token);
+            var result = this._queryProcessor.Get(id);
             return this._autoMapper.Map<CategoryDtoGet>(result);
         }
 
