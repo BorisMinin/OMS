@@ -24,9 +24,9 @@ namespace OMS.Controllers
         /// <param name="id">идентификатор Product</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ProductDtoGet> GetProduct(int id, CancellationToken token)
+        public ProductDtoGet GetProduct(int id)
         {
-            var result = await this._queryProcessor.GetById(id, token);
+            var result = this._queryProcessor.Get(id);
             return this._autoMapper.Map<ProductDtoGet>(result);
         }
 

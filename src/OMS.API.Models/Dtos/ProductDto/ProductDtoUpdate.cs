@@ -7,6 +7,8 @@
     public class ProductDtoUpdate
     {
         // todo: написать комментарий
+        public string ProductName { get; set; }
+        // todo: написать комментарий
         public int? CategoryID { get; set; }
         // todo: написать комментарий
         public string QuantityPerUnit { get; set; }

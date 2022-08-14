@@ -14,15 +14,19 @@ namespace OMS.Queries.QueryProcessors
         {
             _unitOfWork = unitOfWork;
         }
-        public IQueryable<Product> Get(CancellationToken token)
+        public IQueryable<Product> Get()
         {
-            return (IQueryable<Product>)this._unitOfWork.Query<Product>().ToListAsync();
+            return GetQuery();
         }
 
-        public async Task<Product> GetById(int id, CancellationToken token)
+        private IQueryable<Product> GetQuery()
         {
-            return await this._unitOfWork.Query<Product>()
-                .FirstOrDefaultAsync(x => x.ProductId == id, token);
+            return _unitOfWork.Query<Product>();
+        }
+
+        public Product Get(int id)
+        {
+            return GetQuery().AsNoTracking().FirstOrDefault(x => x.ProductId == id);
         }
 
         public async Task<Product> Create(ProductDtoCreate dto, CancellationToken token)
@@ -47,7 +51,7 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task<Product> Update(int id, ProductDtoUpdate dto, CancellationToken token)
         {
-            var product = await this._unitOfWork.Query<Product>().FirstOrDefaultAsync(c => c.ProductId == id, token);
+            var product = GetQuery().FirstOrDefault(c => c.ProductId == id);
 
             product.QuantityPerUnit = dto.QuantityPerUnit;
             product.UnitPrice = dto.UnitPrice;
