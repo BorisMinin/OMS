@@ -30,32 +30,6 @@ namespace OMS.Queries.QueryProcessors
 
         public async Task<Order> Create(OrderDtoCreate orderDto, CancellationToken token)
         {
-
-            #region Try
-            //var order = new Order
-            //{
-            //    CustomerId = model.CustomerId,
-            //    EmployeeId = model.EmployeeId
-            //};
-
-            //var details = model.OrderDetailDto.
-            //    Select(d => new OrderDetail()
-            //    {
-            //        OrderId = d.OrderId,
-            //        ProductId = d.ProductId,
-            //        UnitPrice = d.UnitPrice,
-            //        Quantity = d.Quantity,
-            //        Discount = d.Discount
-            //    });
-
-            //order.OrderDetails = details.ToList<OrderDetail>();
-
-            //_uow.Add(order);
-            //await _uow.CommitAsync();
-
-            //return order;
-            #endregion
-
             var order = new Order()
             {
                 OrderDate = orderDto.OrderDate,
@@ -70,7 +44,6 @@ namespace OMS.Queries.QueryProcessors
                 ShipPostalCode = orderDto.ShipPostalCode,
                 ShipCountry = orderDto.ShipCountry
             };
-
 
             var orderDetails = orderDto.Order_Details.Select(s => new OrderDetail()
             {
