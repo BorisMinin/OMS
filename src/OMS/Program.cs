@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+//Add Memmory Cache
+builder.Services.AddMemoryCache();
+
 string connString = builder.Configuration.GetConnectionString("SQLServer");
 builder.Services.AddDbContext<OMSDbContext>(options => options.UseSqlServer(connString));
 

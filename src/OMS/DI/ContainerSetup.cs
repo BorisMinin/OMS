@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using OMS.Queries.QueryProcessors;
 using OMS.Maps;
+using Microsoft.Extensions.Configuration;
+using OMS.Queries.AppHelpers;
 
 namespace OMS.DI
 {
@@ -27,7 +29,6 @@ namespace OMS.DI
             services.AddTransient<IAutoMapper, AutoMapperAdapter>();
         }
 
-
         private static void AddQueries(IServiceCollection services)
         {
             var exampleProcessorType = typeof(CategoryQueryProcessor);
@@ -42,6 +43,31 @@ namespace OMS.DI
                 var interfaceQ = type.GetTypeInfo().GetInterfaces().First();
                 services.AddScoped(interfaceQ, type);
             }
+        }
+
+        private static void AddCache(IServiceCollection services, IConfiguration configuration)
+        {
+            // настройки конфигураций 
+            services.Configure<CacheConfiguration>(configuration.GetSection("CacheConfiguration"));
+            
+            // для In-Memory Caching
+            services.AddMemoryCache();
+            services.AddTransient<MemoryCacheService>();
+
+            // todo: добавить для Redis
+            // для RedisCacheService
+
+            services.AddTransient<Func<CacheTech, ICacheService>>(serviceProvider => key =>
+            { // todo: по идее свич не нужен, так как используется только In-Memory Caching
+                switch (key)
+                {
+                    case CacheTech.Memory:
+                        return serviceProvider.GetService<MemoryCacheService>();
+                    // место для case для Redis
+                    default:
+                        return serviceProvider.GetService<MemoryCacheService>();
+                }
+            });
         }
     }
 }
