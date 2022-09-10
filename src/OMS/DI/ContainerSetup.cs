@@ -3,21 +3,28 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using OMS.Queries.QueryProcessors;
 using OMS.Maps;
-using Microsoft.Extensions.Configuration;
 using OMS.Queries.AppHelpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace OMS.DI
 {
     public static class ContainerSetup
     {
-        public static void Setup(IServiceCollection services)
-        {
-            AddUow(services);
+        public static void Setup(IServiceCollection services, IConfiguration configuration)
+        { 
+            AddUow(services, configuration);
             AddQueries(services);
             ConfigureAutoMapper(services);
         }
-        private static void AddUow(IServiceCollection services)
+        private static void AddUow(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddEntityFrameworkSqlServer();
+
+            string connString = configuration["ConnectionStrings:SQLServer"];//Configuration.GetConnectionString("SQLServer");
+
+            services.AddDbContext<OMSDbContext>(options =>
+            options.UseSqlServer(connString));
+
             services.AddScoped<IUnitOfWork>(ctx => new EFUnitOfWork(ctx.GetRequiredService<OMSDbContext>()));
         }
 
@@ -49,7 +56,7 @@ namespace OMS.DI
         {
             // настройки конфигураций 
             services.Configure<CacheConfiguration>(configuration.GetSection("CacheConfiguration"));
-            
+
             // для In-Memory Caching
             services.AddMemoryCache();
             services.AddTransient<MemoryCacheService>();
